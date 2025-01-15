@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Information</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+      color: white;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 26px;
+      color: #333;
+    }
+    h2 {
+      font-size: 19px;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Weather Information</h1>
+    <h2>Enter a city name to get the current weather:</h2>
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      if (!city) {
+        resultDiv.innerHTML = "<p class='error'>Please enter a city name.</p>";
+        return;
+      }
+
+      resultDiv.innerHTML = "Fetching weather information...";
+
+      try {
+        // Replace with your API Gateway URL
+        const apiUrl = `https://qx39jb928l.execute-api.af-south-1.amazonaws.com/Implementation?city=${encodeURIComponent(city)}`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        // Parse the response body since it's a stringified JSON
+        const weatherData = JSON.parse(data.body);  // Parse the body of the response
+
+        // Display the parsed data
+        if (weatherData.error) {
+          resultDiv.innerHTML = `<p class='error'>${weatherData.error}</p>`;
+        } else {
+          resultDiv.innerHTML = `
+            <p><strong>City:</strong> ${weatherData.city}</p>
+            <p><strong>Temperature:</strong> ${weatherData.temperature}°C</p>
+            <p><strong>Description:</strong> ${weatherData.description}</p>
+          `;
+        }
+      } catch (error) {
+        resultDiv.innerHTML = `<p class='error'>Failed to fetch weather information. Error: ${error}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
