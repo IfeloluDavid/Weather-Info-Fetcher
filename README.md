@@ -11,3 +11,6 @@ Objective: Create a serverless function that fetches and displays current weathe
 3️⃣ A Lambda function is triggered, fetching the current weather information from OpenWeatherMap's public API.
 
 4️⃣ The result? Instant weather updates delivered back to the user! 🌎🌧️🌞
+
+
+![Weather Info Fetcher](https://github.com/user-attachments/assets/566a1f22-349e-4348-8c7c-4e1dcce023c0)
