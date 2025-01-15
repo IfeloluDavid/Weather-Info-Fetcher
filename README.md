@@ -75,7 +75,40 @@ Objective: Create a serverless function that fetches and displays current weathe
 3. **Deploy the API**:
    - Deploy the API to a stage (e.g., `prod`).
    - Note the API endpoint.
+Configure the Method
+Select the HTTP Method:
+Click on the resource (e.g., /weather) that your Lambda function is linked to.
+Select the HTTP method (e.g., GET) from the methods under that resource.
+Check Method Request:
+Click on Method Request.
+Under URL Query String Parameters, add city as a parameter:
+Click Add query string.
+Enter city as the name and save.
 
+4. Configure Integration Request
+Click on Integration Request.
+Mapping Query String to Lambda:
+Scroll to the section Mapping Templates.
+Ensure that the Lambda Function is selected as the integration type.
+In the Mapping Templates section:
+Click Add mapping template.
+Enter application/json as the content type and click the checkmark.
+Add the following JSON in the mapping template to pass query string parameters to the Lambda function:
+json
+Copy code
+{
+    "queryStringParameters": {
+        "city": "$input.params('city')"
+    }
+}
+
+
+5. Deploy the API
+Once the changes are saved:
+Click on Actions (top menu).
+Select Deploy API.
+Choose an existing stage (e.g., prod) or create a new stage (e.g., test).
+Click Deploy
 ---
 
 ### 4. Create the Frontend
@@ -90,7 +123,7 @@ Replace YOUR_API_GATEWAY_URL with your actual API Gateway URL.
 
 Save the file.
 
-**5. Host the Frontend**
+### 5. Host the Frontend
 Use AWS S3:
 
 Create an S3 bucket.
@@ -100,7 +133,7 @@ Access the Frontend:
 
 Use the S3 website URL to access your frontend.
 
-**6. Testing**
+### 6. Testing
 Open your frontend in a browser.
 Enter a city name and click "Fetch Weather".
 Verify the displayed weather information.
