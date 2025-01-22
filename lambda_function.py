@@ -4,7 +4,7 @@ import urllib.request
 def lambda_handler(event, context):
     # Get the city parameter from the query string
     city = event["queryStringParameters"].get("city", "London")  # Default to London if no city is provided
-    api_key = "e564588b52de35c9ca7e84bb70058611"
+    api_key = "INSERT API KEY"
     base_url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
 
     try:
